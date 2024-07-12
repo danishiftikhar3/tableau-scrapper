@@ -182,8 +182,10 @@ def draw_rectangle_on_map(driver):
         if parent_div:
             # Locate the map element (e.g., an image or a specific container inside the parent div)
             map_element = parent_div.find_element(
-                By.CSS_SELECTOR, "div.tvimagesContainer img"
+                By.XPATH,
+                "//*[@id='view2484860129000949599_4945100679507155691']/div[1]/div[2]",
             )
+
             # Scroll the map element into view
             driver.execute_script("arguments[0].scrollIntoView(true);", map_element)
             time.sleep(2)  # Wait for the scroll action to complete
@@ -207,6 +209,8 @@ def draw_rectangle_on_map(driver):
             action.move_by_offset(width_offset, height_offset).release().perform()
             print("Performed click-and-drag action on the map element.")
             time.sleep(30)
+        else:
+            print("parent_div for rectangle not found.")
     except Exception as e:
         print(f"Error performing click-and-drag action: {str(e)}")
 
@@ -293,7 +297,7 @@ def generate_monthly_periods(start_date, end_date):
 
 
 def main():
-    url = "https://10ay.online.tableau.com/#/site/airdna/views/Europe_PPD/Map"
+    url = "https://10ay.online.tableau.com/#/site/airdna/views/Asia_PPD/Map?:iid=12&COUNTRY_NAME=United%20Arab%20Emirates&MARKET=Dubai"
     driver = open_browser(url)
     # DEBUG - print HTML
     # print_html_and_check_class(driver)
@@ -302,7 +306,7 @@ def main():
     end_date = datetime.strptime("4/1/2024", "%m/%d/%Y")
     periods = generate_monthly_periods(start_date, end_date)
     # Simple date iterations
-    select_currency(driver)
+    # select_currency(driver)
     time.sleep(10)
 
     # Loop through each period and update dates
