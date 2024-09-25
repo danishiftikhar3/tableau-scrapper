@@ -12,6 +12,21 @@ from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
 
+def accept_cookies(driver):
+    try:
+        # Wait for the cookies button to be clickable
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable(
+                (By.XPATH, '//*[@id="onetrust-accept-btn-handler"]')
+            )
+        ).click()
+        print("Cookies accepted successfully.")
+    except TimeoutException:
+        print("Cookies button not found or could not be clicked.")
+    except Exception as e:
+        print(f"An error occurred while accepting cookies: {e}")
+
+
 def open_browser(url):
     driver = webdriver.Chrome()
     driver.get(url)
@@ -25,6 +40,8 @@ def open_browser(url):
     )
     sign_in_button.click()
     time.sleep(5)
+    accept_cookies(driver)
+    time.sleep(5)
     password_input = WebDriverWait(driver, 10).until(
         EC.visibility_of_element_located((By.ID, "password"))
     )
@@ -34,13 +51,8 @@ def open_browser(url):
         EC.element_to_be_clickable((By.ID, "signInButton"))
     )
     sign_in_button.click()
-    time.sleep(15)
-    close_button = WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable(
-            (By.CSS_SELECTOR, "[data-tb-test-id='postlogin-footer-close-Button']")
-        )
-    )
-    close_button.click()
+    time.sleep(30)
+
     return driver
 
 
@@ -293,13 +305,13 @@ def generate_monthly_periods(start_date, end_date):
 
 
 def main():
-    url = "https://10ay.online.tableau.com/#/site/airdna/views/Europe_PPD/Map"
+    url = "https://10ay.online.tableau.com/#/site/airdna/views/Europe_PPD/Map?:iid=2&COUNTRY_NAME=Greece"
     driver = open_browser(url)
     # DEBUG - print HTML
     # print_html_and_check_class(driver)
     # # Generate periods dynamically
-    start_date = datetime.strptime("1/1/2019", "%m/%d/%Y")
-    end_date = datetime.strptime("4/1/2024", "%m/%d/%Y")
+    start_date = datetime.strptime("3/1/2024", "%m/%d/%Y")
+    end_date = datetime.strptime("8/1/2024", "%m/%d/%Y")
     periods = generate_monthly_periods(start_date, end_date)
     # Simple date iterations
     select_currency(driver)
