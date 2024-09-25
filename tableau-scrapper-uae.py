@@ -52,7 +52,7 @@ def open_browser(url):
     )
     sign_in_button.click()
     time.sleep(30)
-    close_button.click()
+
     return driver
 
 
