@@ -309,7 +309,7 @@ def generate_monthly_periods(start_date, end_date):
 
 
 def main():
-    url = "https://10ay.online.tableau.com/#/site/airdna/views/Asia_PPD/Map?:iid=12&COUNTRY_NAME=United%20Arab"
+    url = "https://10ay.online.tableau.com/#/site/airdna/views/Asia_PPD/Map?:iid=12&COUNTRY_NAME=United%20Arab%20Emirates"
     driver = open_browser(url)
     # DEBUG - print HTML
     # print_html_and_check_class(driver)
